@@ -18,8 +18,48 @@ st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
     
-    * {
-        font-family: 'Plus Jakarta Sans', sans-serif !important;
+    html, body, [class*="css"], p, span, h1, h2, h3, h4, h5, h6, .stMarkdown {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    
+    /* Dosya Yükleme (File Uploader) Modernleştirme & Çakışma Düzeltmesi */
+    [data-testid="stFileUploader"] {
+        width: 100% !important;
+        translate: no !important;
+    }
+    [data-testid="stFileUploaderDropzone"] {
+        background: rgba(15, 23, 42, 0.6) !important;
+        border: 2px dashed rgba(99, 102, 241, 0.45) !important;
+        border-radius: 18px !important;
+        padding: 24px 20px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 10px !important;
+        transition: all 0.2s ease !important;
+    }
+    [data-testid="stFileUploaderDropzone"]:hover {
+        border-color: rgba(99, 102, 241, 0.9) !important;
+        background: rgba(30, 41, 59, 0.7) !important;
+    }
+    [data-testid="stFileUploaderDropzone"] button {
+        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-radius: 10px !important;
+        font-weight: 700 !important;
+        padding: 10px 24px !important;
+        margin: 0 !important;
+        white-space: nowrap !important;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3) !important;
+    }
+    [data-testid="stFileUploaderDropzoneInstructions"] {
+        text-align: center !important;
+    }
+    [data-testid="stFileUploaderDropzone"] span {
+        font-size: 13px !important;
+        color: #94a3b8 !important;
     }
     
     /* Ana Arka Plan */
@@ -298,16 +338,15 @@ ORNEK_VERILER = [
 with tab_toplu:
     st.markdown("#### 📂 Analiz Edilecek Veri Dosyası")
     
-    c_up1, c_up2 = st.columns([3, 1.2])
-    with c_up1:
-        yuklenen_dosya = st.file_uploader(
-            "Yorumları içeren Excel (.xlsx) veya CSV dosyanızı yükleyin:",
-            type=["xlsx", "csv"],
-            help="Dosyanızın ilk sütununda müşteri yorumlarının yer alması yeterlidir."
-        )
-    with c_up2:
-        st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
-        demo_calistir = st.button("✨ Örnek Veriyle Gör (1-Tık)", use_container_width=True, help="Elinizde dosya yoksa 12 adet gerçekçi yorumla sistemi test eder.")
+    yuklenen_dosya = st.file_uploader(
+        "Müşteri yorumlarını içeren Excel (.xlsx) veya CSV dosyanızı buraya bırakın:",
+        type=["xlsx", "csv"],
+        help="Dosyanızın ilk sütununda müşteri yorumlarının yer alması yeterlidir."
+    )
+    
+    c_btn1, c_btn2 = st.columns([1.8, 3])
+    with c_btn1:
+        demo_calistir = st.button("✨ Veya Örnek E-Ticaret Verisiyle Gör (1-Tık)", use_container_width=True, help="Elinizde dosya yoksa 12 adet gerçekçi yorumla sistemi test eder.")
         
     df_islem = None
     if yuklenen_dosya is not None:
