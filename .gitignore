@@ -1,0 +1,13 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+en_iyi_berturk_modeli/
+berturk_3_sinif_modeli/
+sonuclar/
+*.xlsx
+*.csv
+.ipynb_checkpoints/
+*.pt
+*.bin
